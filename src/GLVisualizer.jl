@@ -16,6 +16,6 @@ include("visuals.jl")
 include("depth.jl")
 
 export
-    GLVisualizer1220
+    Visualizer
 
 end

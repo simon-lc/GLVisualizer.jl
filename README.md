@@ -6,7 +6,7 @@ Robot visualization tools using OpenGL backend.
 
 ```
 resolution = (600, 400)
-vis = GLVisualizer1220(resolution=resolution)
+vis = GLVisualizer(resolution=resolution)
 open(vis)
 ```
 #### set a floor object

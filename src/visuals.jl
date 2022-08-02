@@ -1,4 +1,4 @@
-struct GLVisualizer1220
+struct Visualizer
     scene::Dict{Symbol,Any}
     trans::Dict{Symbol,Any}
     names::Vector{Symbol}
@@ -7,7 +7,7 @@ struct GLVisualizer1220
 	camera::Camera3D
 end
 
-function GLVisualizer1220(; resolution=(800,600))
+function Visualizer(; resolution=(800,600))
     scene = Scene(
         # clear everything behind scene
         clear = true,
@@ -24,14 +24,14 @@ function GLVisualizer1220(; resolution=(800,600))
 	# screen
 	screen = Vector{Any}()
     push!(screen, nothing)
-    return GLVisualizer1220(scene, trans, names, graph, screen, camera)
+    return Visualizer(scene, trans, names, graph, screen, camera)
 end
 
-function Base.open(vis::GLVisualizer1220)
+function Base.open(vis::Visualizer)
     vis.screen[1] = display(vis.scene[:root])
 end
 
-function setobject!(vis::GLVisualizer1220, parent::Symbol, name::Symbol, object;
+function setobject!(vis::Visualizer, parent::Symbol, name::Symbol, object;
         color=RGBA(0.3, 0.3, 0.3, 0.7))
 
     parent_scene = vis.scene[parent]
@@ -49,23 +49,23 @@ function setobject!(vis::GLVisualizer1220, parent::Symbol, name::Symbol, object;
     return nothing
 end
 
-function settransform!(vis::GLVisualizer1220, name::Symbol, x, q)
+function settransform!(vis::Visualizer, name::Symbol, x, q)
     set_translation!(vis, name, x)
     set_rotation!(vis, name, q)
     return nothing
 end
 
-function set_translation!(vis::GLVisualizer1220, name::Symbol, x)
+function set_translation!(vis::Visualizer, name::Symbol, x)
     GLMakie.translate!(vis.scene[name], x...)
     return nothing
 end
 
-function set_rotation!(vis::GLVisualizer1220, name::Symbol, q)
+function set_rotation!(vis::Visualizer, name::Symbol, q)
     GLMakie.rotate!(vis.scene[name], q)
     return nothing
 end
 
-function set_camera!(vis::GLVisualizer1220;
+function set_camera!(vis::Visualizer;
         eyeposition=[1,1,1.0],
         lookat=[0,0,0.0],
         up=[0,0,1.0],
@@ -97,7 +97,7 @@ end
     normal:: unit vector indicating the normal to the floor
     color: RGBA
 """
-function set_floor!(vis::GLVisualizer1220;
+function set_floor!(vis::Visualizer;
 	    x=20.0,
 	    y=20.0,
 	    z=0.1,

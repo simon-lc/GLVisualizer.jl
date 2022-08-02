@@ -1,6 +1,6 @@
 # create and open a visualizer
 resolution = (600, 400)
-vis = GLVisualizer1220(resolution=resolution)
+vis = Visualizer(resolution=resolution)
 open(vis)
 
 # set a floor object
@@ -70,3 +70,6 @@ for i in p1
 end
 Plots.plot(Gray.(1 .- rotl90(linear_depth)))
 Plots.plot(Gray.(1 .- rotl90(point_depth)))
+Plots.plot(world_coordinates[3,:])
+
+minimum(world_coordinates[3,:])

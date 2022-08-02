@@ -10,18 +10,18 @@ function depthbuffer!(screen::GLMakie.Screen, depth=Matrix{Float32}(undef, size(
     return depth
 end
 
-function depth_buffer(vis::GLVisualizer1220)
+function depth_buffer(vis::Visualizer)
     depth = depthbuffer!(vis.screen[1])
 	depth_rescaling!(depth, vis)
 end
 
-function depth_buffer!(depth::Matrix, vis::GLVisualizer1220)
+function depth_buffer!(depth::Matrix, vis::Visualizer)
     (vis.screen[1] == nothing) && open(vis)
     depthbuffer!(vis.screen[1], depth)
 	depth_rescaling!(depth, vis)
 end
 
-function depth_rescaling!(depth::Matrix, vis::GLVisualizer1220)
+function depth_rescaling!(depth::Matrix, vis::Visualizer)
 	# open GL does not use a linear scaling for the depth pixel value:
 	# https://learnopengl.com/Advanced-OpenGL/Depth-testing
 	near_i = 1 / vis.camera.near.val
@@ -72,7 +72,7 @@ function depthpixel_to_world(px, py, depth, resolution, fovy, eyeposition, looka
 	return pw
 end
 
-function depthpixel_to_world!(coordinates::Matrix, depth::Matrix, p1::Vector, p2::Vector, vis::GLVisualizer1220)
+function depthpixel_to_world!(coordinates::Matrix, depth::Matrix, p1::Vector, p2::Vector, vis::Visualizer)
 	# coordinates: a matrix of size 3 × (n1 * n2)
 	# p1 are the pixel coordinates along the 1st dimension of the depth image
 	# p2 are the pixel coordinates along the 2nd dimension of the depth image
