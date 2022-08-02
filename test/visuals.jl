@@ -1,8 +1,7 @@
 @testset "visuals" begin
     # create and open a visualizer
     resolution = (600, 400)
-    vis = GLVisualizer.Visualizer(resolution=resolution, visible=false)
-    # GLVisualizer.open(vis)
+    vis = GLVisualizer.Visualizer(resolution=resolution)
 
     # set a floor object
     GLVisualizer.set_floor!(vis, color=GLVisualizer.RGBA(0.4, 0.4, 0.4, 0.2))

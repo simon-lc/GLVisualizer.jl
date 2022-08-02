@@ -16,6 +16,11 @@ include("visuals.jl")
 include("depth.jl")
 
 export
-    Visualizer
+    Visualizer,
+    depthbuffer!,
+    depth_buffer,
+    depth_buffer!,
+    depth_rescaling!
+
 
 end

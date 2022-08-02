@@ -1,7 +1,8 @@
 # create and open a visualizer
 resolution = (600, 400)
 vis = Visualizer(resolution=resolution)
-open(vis)
+scr = open(vis, visible=true)
+
 
 # set a floor object
 set_floor!(vis, color=RGBA(0.4, 0.4, 0.4, 0.2))
@@ -70,6 +71,5 @@ for i in p1
 end
 Plots.plot(Gray.(1 .- rotl90(linear_depth)))
 Plots.plot(Gray.(1 .- rotl90(point_depth)))
-Plots.plot(world_coordinates[3,:])
 
 minimum(world_coordinates[3,:])

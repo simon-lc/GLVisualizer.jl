@@ -7,12 +7,12 @@ struct Visualizer
 	camera::Camera3D
 end
 
-function Visualizer(; resolution=(800,600), visible::Bool=true)
+function Visualizer(; resolution=(800,600))
     scene = Scene(
         # clear everything behind scene
         clear=true,
         # the camera struct of the scene.
-        visible=visible,
+        visible=true,
         resolution=resolution)
 
 	camera = cam3d_cad!(scene)
@@ -22,13 +22,30 @@ function Visualizer(; resolution=(800,600), visible::Bool=true)
     graph = SimpleDiGraph()
     add_vertex!(graph)
 	# screen
-	screen = Vector{Any}()
-    push!(screen, nothing)
+	screen = Vector{Any}([open(scene, visible=false)])
     return Visualizer(scene, trans, names, graph, screen, camera)
 end
 
-function Base.open(vis::Visualizer)
-    vis.screen[1] = display(vis.scene[:root])
+function Base.open(vis::Visualizer; visible::Bool=true)
+	scene = vis.scene[:root]
+	screen = open(scene, visible=visible)
+	vis.screen[1] = screen
+	return nothing
+end
+
+function Base.open(scene::Scene; visible::Bool=true)
+	if visible
+		screen = display(scene)
+    else
+		screen = GLMakie.singleton_screen(size(scene), visible=false, start_renderloop=false)
+		GLMakie.ShaderAbstractions.switch_context!(screen.glscreen)
+		empty!(screen)
+		insertplots!(screen, scene)
+		GLMakie.display_loading_image(screen)
+		Base.resize!(screen, size(scene)...)
+		Makie.backend_display(screen, scene)
+	end
+	return screen
 end
 
 function setobject!(vis::Visualizer, parent::Symbol, name::Symbol, object;
@@ -111,7 +128,6 @@ function set_floor!(vis::Visualizer;
 
 	p = origin
 	q = axes_pair_to_quaternion([0,0,1.], normal)
-	@show typeof(q)
     settransform!(vis, :floor, p, q)
     return nothing
 end
