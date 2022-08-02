@@ -83,7 +83,13 @@ for i = 1:size(world_coordinates, 2)
 end
 ```
 
-#### plot the depth images and visualize the pixels that have been extracted from it
+#### camera view from the front
+<img src="deps/world_front.png" width="300"/>
+
+#### camera view from the side
+<img src="deps/world_side.png" width="300"/>
+
+#### plot the depth image and visualize the pixels that have been extracted from it
 ```
 linear_depth = (depth .- minimum(depth)) ./ (maximum(depth) - minimum(depth))
 point_depth = deepcopy(linear_depth)
@@ -93,11 +99,6 @@ for i in p1
 	end
 end
 ```
-#### camera view from the front
-<img src="deps/world_front.png" width="300"/>
-
-#### camera view from the side
-<img src="deps/world_side.png" width="300"/>
 
 #### depth image
 ```
