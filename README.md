@@ -1,3 +1,5 @@
+[![CI](https://github.com/simon-lc/GLVisualizer.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/simon-lc/GLVisualizer.jl/actions/workflows/CI.yml)
+
 # GLVisualizer.jl
 Robot visualization tool using OpenGL backend. The API proposed in this package is heavily inspired from [MeshCat.jl](https://github.com/rdeits/MeshCat.jl). The reason for developing this package was to access depth information from a camera view. A tutorial on doing just this is provided below.
 
