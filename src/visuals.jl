@@ -7,12 +7,12 @@ struct Visualizer
 	camera::Camera3D
 end
 
-function Visualizer(; resolution=(800,600))
+function Visualizer(; resolution=(800,600), visible::Bool=true)
     scene = Scene(
         # clear everything behind scene
-        clear = true,
+        clear=true,
         # the camera struct of the scene.
-        visible = true,
+        visible=visible,
         resolution=resolution)
 
 	camera = cam3d_cad!(scene)
