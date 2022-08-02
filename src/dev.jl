@@ -1,5 +1,5 @@
-
-
+include("visuals.jl")
+include("depth.jl")
 
 resolution0 = (600, 600)
 vis = GLVisualizer1220(resolution=resolution0)
@@ -24,9 +24,9 @@ set_camera!(vis;
 		zoom=1.0,
 		)
 
-# settransform!(vis, :object1, [0,0,1.0], Quaternion(0,0,0,1.0))
-# settransform!(vis, :object1, [0,0,1.0], Quaternion(sqrt(2)/2,0,0,sqrt(2)/2))
-# settransform!(vis, :object1, [0,0,1.0], Quaternion(1,0,0,0.0))
+settransform!(vis, :object1, [0,0,1.0], Makie.Quaternion(0,0,0,1.0))
+settransform!(vis, :object1, [0,0,1.0], Makie.Quaternion(sqrt(2)/2,0,0,sqrt(2)/2))
+settransform!(vis, :object1, [0,0,1.0], Makie.Quaternion(1,0,0,0.0))
 
 depth_color = depth_buffer(vis)
 maximum(depth_color)
@@ -45,11 +45,9 @@ pc0 = depthpixel_to_camera(px0, py0, depth0, resolution0, fovy0)
 pw0 = depthpixel_to_world(px0, py0, depth0, resolution0, fovy0, eyeposition0, lookat0, up0)
 
 pixel1 = HyperSphere(Point{3}(0,0,0.0), 0.007)
-setobject!(vis, :root, Symbol(:pixel, counter), pixel1, color=RGBA(0.0,0.0,0.0,1.0))
-settransform!(vis, Symbol(:pixel,counter), pw0, Makie.Quaternion(0,0,0,1.0))
-@show
+# setobject!(vis, :root, Symbol(:pixel, counter), pixel1, color=RGBA(0.0,0.0,0.0,1.0))
+# settransform!(vis, Symbol(:pixel,counter), pw0, Makie.Quaternion(0,0,0,1.0))
 
-# Plots.spy(10*rotl90(depth_color))
 linear_depth_color = (depth_color .- minimum(depth_color)) ./ (maximum(depth_color) - minimum(depth_color))
 point_depth_color = deepcopy(linear_depth_color)
 

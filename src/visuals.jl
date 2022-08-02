@@ -110,7 +110,8 @@ function set_floor!(vis::GLVisualizer1220;
 	setobject!(vis, :root, :floor, obj, color=color)
 
 	p = origin
-	q = RobotVisualizer.axes_pair_to_quaternion([0,0,1.], normal)
-    settransform!(vis, :floor, p, Makie.Quaternion(q.v1, q.v2, q.v3, q.s))
+	q = axes_pair_to_quaternion([0,0,1.], normal)
+	@show typeof(q)
+    settransform!(vis, :floor, p, q)
     return nothing
 end
