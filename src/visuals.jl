@@ -22,7 +22,7 @@ function Visualizer(; resolution=(800,600))
     graph = SimpleDiGraph()
     add_vertex!(graph)
 	# screen
-	screen = Vector{Any}([open(scene, visible=false)])
+	screen = Vector{Any}([open(scene[:root], visible=false)])
     return Visualizer(scene, trans, names, graph, screen, camera)
 end
 

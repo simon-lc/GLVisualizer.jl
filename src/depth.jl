@@ -30,48 +30,6 @@ function depth_rescaling!(depth::Matrix, vis::Visualizer)
 	return depth
 end
 
-function depthpixel_to_camera(p1, p2, depth, resolution, fovy)
-	r1, r2 = resolution
-	# pixel coordinate rescaled from -1 to 1
-	αx = + (p1 * 2 / r1 - 1 / r1 - 1.0)
-	αy = + (p2 * 2 / r2 - 1 / r2 - 1.0)
-
-	# coordinate of the pixel in the camera frame
-	# the pixel belongs to a plane 'depth plane' located at distance = depth from the camera.
-	# l = half-size of the image projected on the depth plane.
-	fovx = fovy * r1/r2
-	# fovx = fovy / (r1/r2)
-	lx = depth * tan(2π*fovx/360 / 2)
-	ly = depth * tan(2π*fovy/360 / 2)
-
-	# x, y positions in the depth plane
-	x = αx * lx
-	y = αy * ly
-	# The z axis is directed towards the back of the camera when y points upwards and x points to the right
-	return [x, y, -depth]
-end
-
-function camera_to_world(pc, eyeposition, lookat, upvector)
-	# z axis = look_direction
-	z = normalize(eyeposition - lookat)
-	# y axis = upvector
-	y = upvector - (upvector'*z)*z
-	@assert norm(y) > 0.0
-	y = normalize(y)
-	# x axis = y × z
-	x = normalize(cross(y, z))
-	# rotation matrix
-	wRc = [x y z]
-	pw = wRc * pc + eyeposition
-	return pw
-end
-
-function depthpixel_to_world(px, py, depth, resolution, fovy, eyeposition, lookat, upvector)
-	pc = depthpixel_to_camera(px, py, depth, resolution, fovy)
-	pw = camera_to_world(pc, eyeposition, lookat, upvector)
-	return pw
-end
-
 function depthpixel_to_world!(coordinates::Matrix, depth::Matrix, p1::Vector, p2::Vector, vis::Visualizer)
 	# coordinates: a matrix of size 3 × (n1 * n2)
 	# p1 are the pixel coordinates along the 1st dimension of the depth image
