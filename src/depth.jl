@@ -1,4 +1,5 @@
 function depthbuffer!(screen::GLMakie.Screen, depth=Matrix{Float32}(undef, size(screen.framebuffer.buffers[:depth])))
+	depth = convert(Matrix{Float32}, depth)
     GLMakie.ShaderAbstractions.switch_context!(screen.glscreen)
     GLMakie.render_frame(screen, resize_buffers=false) # let it render
     GLMakie.glFinish() # block until opengl is done rendering
@@ -15,7 +16,7 @@ function depth_buffer(vis::Visualizer)
 	depth_rescaling!(depth, vis)
 end
 
-function depth_buffer!(depth::Matrix, vis::Visualizer)
+function depth_buffer!(depth::Matrix{Float32}, vis::Visualizer)
     (vis.screen[1] == nothing) && open(vis)
     depthbuffer!(vis.screen[1], depth)
 	depth_rescaling!(depth, vis)
