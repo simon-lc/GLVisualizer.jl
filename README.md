@@ -92,6 +92,7 @@ end
 ```
 #### camera view from the front
 <img src="deps/world_front.png" width="300"/>
+
 #### camera view from the side
 <img src="deps/world_side.png" width="300"/>
 
