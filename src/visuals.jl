@@ -66,6 +66,13 @@ function setobject!(vis::Visualizer, parent::Symbol, name::Symbol, object;
     return nothing
 end
 
+function Base.delete!(vis::Visualizer, name::Symbol)
+	if name ∈ keys(vis.scene)
+		delete!(vis.screen[1], vis.scene[name])
+	end
+	return nothing
+end
+
 function settransform!(vis::Visualizer, name::Symbol, x, q)
     set_translation!(vis, name, x)
     set_rotation!(vis, name, q)
